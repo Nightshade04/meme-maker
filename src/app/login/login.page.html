@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid fixed>
+    <ion-row class='ion-justify-content-center'>
+      <ion-col size='12' size-md='6' size-lg='6'>
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title class='ion-text-center'>
+              <ion-icon name="lock-closed-outline" color="secondary"></ion-icon>
+              Login
+            </ion-card-title>
+            <ion-card-content>
+              <form [formGroup]="loginForm" autocomplete="off">
+                <ion-item>
+                  <ion-label position='floating'>Email</ion-label>
+                  <ion-input type='text' formControlName="email"></ion-input>
+                </ion-item>
+                <div class='error-message'>
+                  {{formErrors.email}}
+                </div>
+                <ion-item>
+                  <ion-label position='floating'>Password</ion-label>
+                  <ion-input type='password' formControlName="password"></ion-input>
+                </ion-item>
+                <div class='error-message'>
+                  {{formErrors.password}}
+                </div>
+                <ion-row>
+                  <ion-col>
+                    <ion-button color='success' expand='block' class='ion-margin-top' [disabled]='loginForm.invalid'
+                      (click)='login()'>
+                      <ion-spinner name="crescent" *ngIf='showSpinner'></ion-spinner>
+                      <div *ngIf='!showSpinner'>Login</div>
+                    </ion-button>
+                  </ion-col>
+                  <ion-col>
+                    <ion-button expand='block' class='ion-margin-top' (click)='googleLogin()'>
+                      <ion-icon name='logo-google'></ion-icon>
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+                <ion-button color='light' expand='block' class='ion-margin-top' (click)='goToSignupPage()'>Signup
+                </ion-button>
+              </form>
+            </ion-card-content>
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

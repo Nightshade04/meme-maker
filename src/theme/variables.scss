@@ -74,6 +74,17 @@
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
+
+}
+
+.md{
+  /** toolbar styling*/
+  --ion-toolbar-background: var(--ion-color-dark);
+  --ion-toolbar-color: #ffffff;
+}
+
+.ios{
+
 }
 
 @media (prefers-color-scheme: dark) {

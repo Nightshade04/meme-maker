@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref='tabs/library'></ion-back-button>
+    </ion-buttons>
+    <ion-title>Image Editor</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card *ngIf="!(croppedImage)">
+    <ion-card-header>
+      <ion-card-title>Original Image</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <image-cropper [imageBase64]="imageUrl" [maintainAspectRatio]="true" [aspectRatio]="4 / 3" format="png"
+        (imageCropped)="imageCropped($event)" outputType="base64"></image-cropper>
+      <ion-row class="ion-margin-top">
+        <ion-col>
+          <ion-button color='success' (click)='showCroppedImage()' expand='block'>
+            <ion-icon name='crop'></ion-icon>
+            Crop
+          </ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button color='danger' (click)='discardImage()' expand='block'>
+            <ion-icon name="arrow-back-circle-sharp"></ion-icon>
+            Go Back
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Add new buttons here to have additional functionality like rotation, shifting flipping etc. -->
+
+  <ion-card *ngIf="croppedImage && !toggleWatermarkCard">
+    <ion-card-header>
+      <ion-card-title>Cropped Image</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <img [src]="croppedImage" />
+      <ion-button color='secondary' expand='full' (click)='addTextWatermark()' [disabled]='!blobImage'>Add Text
+      </ion-button>
+      <ion-button color='success' expand='full' (click)='saveImage(croppedImage)'>Save Changes</ion-button>
+      <ion-button color='danger' expand='full' (click)='discardImage(croppedImage)'>Discard Changes</ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Watermarking properties -->
+  <ion-card *ngIf="toggleWatermarkCard">
+    <ion-card-header>
+      <ion-card-title>Add Text</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <img #previewImage />
+      <!-- <ion-button color='secondary' expand='full' (click)='addTextWatermark()'>Add Text</ion-button>
+      <ion-button color='success' expand='full' (click)='saveImage(croppedImage)'>Save Changes</ion-button>
+      <ion-button color='danger' expand='full' (click)='discardImage(croppedImage)'>Discard Changes</ion-button> -->
+    </ion-card-content>
+  </ion-card>
+</ion-content>

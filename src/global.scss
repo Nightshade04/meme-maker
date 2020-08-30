@@ -24,3 +24,17 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+
+
+.loading-page {
+    width: 50px !important;
+    height: 50px !important; 
+    top: 45%;
+    left: 45%;
+    position: fixed;
+}
+
+.error-message {
+    color: #ff0000;
+}

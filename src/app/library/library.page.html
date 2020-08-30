@@ -1,0 +1,46 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Gallery
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <!-- Show Photos if photos are available -->
+  <ion-grid>
+    <ion-spinner *ngIf='showLibrarayLoadSpinner' name="crescent" class="loading-page"></ion-spinner>
+    <ion-row *ngIf="!showLibrarayLoadSpinner && photoService.photos && photoService.photos.length > 0">
+      <ion-col *ngFor="let photo of photoService.photos" size="3">
+        <img [src]=photo.data (click)="imageViewer(photo.data)" />
+      </ion-col>
+    </ion-row>
+    <ion-row class='ion-justify-content-center' *ngIf="!showLibrarayLoadSpinner && !(photoService.photos && photoService.photos.length > 0)">
+      <ion-col size='12' size-md='6' size-lg='6'>
+        <ion-text color="primary">
+          <h5>
+            No Photos available yet! Why don't you take or import one?
+          </h5>
+        </ion-text>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- Floating action button here -->
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+    <ion-fab-button color="dark">
+      <ion-icon name='add'></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button color="light" (click)='fabController("Load from Library")'>
+        <ion-icon name="library-sharp"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="light" (click)='fabController("Use Camera")'>
+        <ion-icon name="camera-sharp"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+
+  <!-- <app-explore-container name="Tab 1 page"></app-explore-container> -->
+</ion-content>

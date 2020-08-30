@@ -1,5 +1,7 @@
 {
   "name": "Meme Maker",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
