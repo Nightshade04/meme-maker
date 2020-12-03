@@ -3,6 +3,7 @@ import { FirebaseAuthService } from '../services/firebase-auth.service';
 import { WidgetUtilService } from '../services/widget-util.service';
 import { Router, NavigationExtras } from '@angular/router';
 import { NavController } from '@ionic/angular';
+import { FirestoreDbService } from '../services/firestore-db.service';
 
 @Component({
   selector: 'app-community',
@@ -12,29 +13,31 @@ import { NavController } from '@ionic/angular';
 export class Tab2Page {
 
   isLoggedIn: boolean = false;
+  posts: Array<any> = [];
+  loggedInUser: any = undefined;
+  
 
   constructor(
     private firebaseAuthService: FirebaseAuthService,
     private widgetUtilService: WidgetUtilService,
     private router: Router,
-    private navCtrl: NavController
+    private firestoreDbService: FirestoreDbService
   ) {
-    // this.getAuthState();
+    this.getAuthState();
   }
 
   getAuthState() {
     this.widgetUtilService.presentLoading();
     this.firebaseAuthService.getAuthState().subscribe(user => {
-      console.log('user =======> ', user ? user.toJSON() : null)
       if (user && user.emailVerified) {
-        this.isLoggedIn = true;
+        console.log('User is already Logged IN');
+        this.loggedInUser = user;
+        this.getAllPostsByTime();
       }
       else {
         user = null;
-        this.isLoggedIn = false;
+        this.router.navigate(['/login']);
       }
-      console.log('HERERERERERE');
-      this.handleNavigation();
       this.widgetUtilService.dismissLoader();
     }, error => {
       this.widgetUtilService.dismissLoader();
@@ -42,23 +45,14 @@ export class Tab2Page {
     });
   }
 
-  handleNavigation() {
-    if (this.isLoggedIn) {
-      console.log(this.router.url)
-      const currentUrl = this.router.url.split('/')[1];
-      if (currentUrl === 'login' || currentUrl === 'signup') {
-        this.router.navigate(['/tabs/community']);
-      }
-    }
-    else {
-      let navigationExtras: NavigationExtras = {
-        queryParams: {
-          parentPage: this.router.url
-        }
-      }
-      this.navCtrl.navigateForward(['/login'], navigationExtras)
-      // this.router.navigate(['/login']);
-    }
+  getAllPostsByTime() {
+    this.firestoreDbService.getAllPosts('posts').subscribe(result => {
+      this.posts = result;
+      console.log(this.posts);
+      this.widgetUtilService.dismissLoader();
+    }, error => {
+      this.widgetUtilService.presentToast(error);
+    });
   }
 
 }

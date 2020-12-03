@@ -116,7 +116,11 @@ export class PhotoService {
   }
 
   save(imageUrl) {
-    this.photos.splice(this.photos.findIndex((val) => { return val.data == imageUrl }), 1);
+    var index = this.photos.findIndex(val => val.data == imageUrl);
+    console.log(index, "YAHAN SEEEE")
+    if (index != -1) {
+      this.photos.splice(index, 1);
+    }
     this.photos.unshift({
       data: imageUrl
     });

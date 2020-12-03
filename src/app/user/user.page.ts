@@ -15,6 +15,7 @@ export class Tab3Page {
   presentLoader: boolean = true;
   profileData: any = {};
   profileDataNotAvailabe: boolean = false;
+  userPosts: Array<String> = [];
 
   constructor(
     private firebaseAuthService: FirebaseAuthService,
@@ -36,7 +37,7 @@ export class Tab3Page {
           this.profileData = result.length == 0 ? user.toJSON() : result[0];
           this.presentLoader = true;
           this.isLoggedIn = true;
-          if(result.length == 0) {
+          if (result.length == 0) {
             console.log('I am HERE!!!!!!!!!!!!!!!!!!');
             this.firestoreDbService.addUser('users', {
               fiestName: user.toJSON()['displayName'].split(' ')[0],
@@ -47,9 +48,12 @@ export class Tab3Page {
               followedBy: [],
               posts: [],
               photoURL: user.toJSON()['photoURL']
-            }).then(()=> {
+            }).then(() => {
               this.getAuthState();
             });
+          }
+          else {
+            this.getAllPostsByUser(email);
           }
         }, error => {
           this.presentLoader = true;
@@ -96,5 +100,19 @@ export class Tab3Page {
   login() {
     this.router.navigate(['/login']);
   }
+
+  getAllPostsByUser(email) {
+    this.firestoreDbService.getUserDataByEmail('users', email).subscribe(result => {
+      console.log(result[0])
+      this.userPosts = result[0]['posts'];
+      console.log(this.userPosts, 'USER POSTS');
+    }
+      , error => {
+        this.widgetUtilService.dismissLoader();
+        this.widgetUtilService.presentToast(error);
+
+      })
+  }
+
 
 }

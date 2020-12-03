@@ -25,6 +25,20 @@ export class FirestoreDbService {
     );
   }
 
+  getAllPosts(collectionId) {
+    return this.db.collection(collectionId, ref => ref.orderBy('timestamp', 'desc')).snapshotChanges().pipe(
+      map(docArray => {
+        return docArray.map(doc => {
+          var obj: any = doc.payload.doc.data();
+          return {
+            id: doc.payload.doc.id,
+            ...obj
+          }
+        })
+      })
+    );
+  }
+
   async updateUserDataById(collectionId, docId, data) {
     try {
       const result = await this.db.doc(`${collectionId}/${docId}`).update(data);
