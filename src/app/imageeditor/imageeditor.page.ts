@@ -34,7 +34,8 @@ export class ImageeditorPage implements OnInit {
   }
 
   saveImage(imageUrl) {
-    /** To add function of keeping or discarding original */
+    /** To add function of keeping or discarding original */ 
+    /*  INITIAL IDEA :- create one more dialog box and then add one more param in the save() fn call */
     this.photoService.save(imageUrl);
     this.navCtrl.pop();
   }

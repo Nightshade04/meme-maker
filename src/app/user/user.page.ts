@@ -40,7 +40,7 @@ export class Tab3Page {
           if (result.length == 0) {
             console.log('I am HERE!!!!!!!!!!!!!!!!!!');
             this.firestoreDbService.addUser('users', {
-              fiestName: user.toJSON()['displayName'].split(' ')[0],
+              firstName: user.toJSON()['displayName'].split(' ')[0],
               lastName: user.toJSON()['displayName'].split(' ')[1],
               displayName: user.toJSON()['displayName'],
               email: user.toJSON()['email'],
@@ -106,12 +106,11 @@ export class Tab3Page {
       console.log(result[0])
       this.userPosts = result[0]['posts'];
       console.log(this.userPosts, 'USER POSTS');
-    }
-      , error => {
-        this.widgetUtilService.dismissLoader();
-        this.widgetUtilService.presentToast(error);
+    }, error => {
+      this.widgetUtilService.dismissLoader();
+      this.widgetUtilService.presentToast(error);
 
-      })
+    })
   }
 
 

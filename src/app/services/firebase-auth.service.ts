@@ -76,6 +76,7 @@ export class FirebaseAuthService {
         offline: true,
         scope: 'profile email'
       });
+      await this.angularFireAuth.signInAndRetrieveDataWithCredential(auth.GoogleAuthProvider.credential(result.idToken));
       return result;
     } catch (error) {
       throw new Error(error)

@@ -135,9 +135,10 @@ export class LoginPage implements OnInit {
       this.widgetUtilService.presentToast('Login Successful')
       this.router.navigate(['/tabs/user']);
       this.widgetUtilService.dismissLoader();
-    } catch (error) {
-      console.log(error, "From here....")
-      this.widgetUtilService.presentToast('Something went wrong!!!')
+    }
+    catch (error) {
+
+      this.widgetUtilService.presentToast(error + 'Something went wrong!!!')
       this.widgetUtilService.dismissLoader()
     }
   }
