@@ -39,16 +39,26 @@
       <ion-card-title>Cropped Image</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <img [src]="croppedImage" />
-      <ion-button color='secondary' expand='full' (click)='addTextWatermark()' [disabled]='!blobImage'>Add Text
-      </ion-button>
+      <div>
+        <img [src]="croppedImage" id='backdropImage' />
+        <div 
+          class="box" 
+          [ngClass]="{ selected: i.toString() === selectedBox }" 
+          *ngFor="let textBox of textOverlays; let i = index"
+          [id]="i" 
+          (click)="selectTextBox(i)"
+        >
+          <p> This is a text in img </p>
+        </div>
+      </div>
+      <ion-button color='secondary' expand='full' (click)='addTextonBackDrop()' [disabled]='!blobImage'>Add Text</ion-button>
       <ion-button color='success' expand='full' (click)='saveImage(croppedImage)'>Save Changes</ion-button>
       <ion-button color='danger' expand='full' (click)='discardImage(croppedImage)'>Discard Changes</ion-button>
     </ion-card-content>
   </ion-card>
 
   <!-- Watermarking properties -->
-  <ion-card *ngIf="toggleWatermarkCard">
+  <!-- <ion-card *ngIf="toggleWatermarkCard">
     <ion-card-header>
       <ion-card-title>Add Text</ion-card-title>
     </ion-card-header>
@@ -56,7 +66,7 @@
       <img #previewImage />
       <!-- <ion-button color='secondary' expand='full' (click)='addTextWatermark()'>Add Text</ion-button>
       <ion-button color='success' expand='full' (click)='saveImage(croppedImage)'>Save Changes</ion-button>
-      <ion-button color='danger' expand='full' (click)='discardImage(croppedImage)'>Discard Changes</ion-button> -->
-    </ion-card-content>
-  </ion-card>
+      <ion-button color='danger' expand='full' (click)='discardImage(croppedImage)'>Discard Changes</ion-button>
+  </ion-card-content>
+  </ion-card> -->
 </ion-content>

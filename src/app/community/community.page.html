@@ -16,7 +16,7 @@
   <ion-card *ngFor='let post of posts' class="single-post-home">
     <ion-item>
       <ion-avatar item-start>
-        <img src="{{ loggedInUser.photoURL || 'assets/icon/avatar.jpg'}}">
+        <img src="{{ post.ownerPhotoURL || 'assets/icon/avatar.jpg'}}">
       </ion-avatar>
       <h2>{{post.owner}}</h2>
     </ion-item>

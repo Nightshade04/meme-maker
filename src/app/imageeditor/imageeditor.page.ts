@@ -18,6 +18,8 @@ export class ImageeditorPage implements OnInit {
   private toggleWatermarkCard: boolean = false;
   private blobImage: any = null;
   public watermarkText: string = '';
+  private textOverlays: any = [];
+  private selectedTextOverlay: String = '';
 
   @ViewChild(ImageCropperComponent, { static: false }) cropperArea: ImageCropperComponent;
   @ViewChild('previewImage', { static: false }) watermarkedImage: ElementRef;
@@ -34,7 +36,7 @@ export class ImageeditorPage implements OnInit {
   }
 
   saveImage(imageUrl) {
-    /** To add function of keeping or discarding original */ 
+    /** To add function of keeping or discarding original */
     /*  INITIAL IDEA :- create one more dialog box and then add one more param in the save() fn call */
     this.photoService.save(imageUrl);
     this.navCtrl.pop();
@@ -58,6 +60,19 @@ export class ImageeditorPage implements OnInit {
         console.log(this.blobImage)
       })
       .catch(err => console.log(err));
+
+  }
+
+  selectTextBox(i: number) {
+    this.selectedTextOverlay = i.toString();
+    console.log(this.selectedTextOverlay);
+  }
+
+  addTextonBackDrop() {
+
+    this.textOverlays.push({
+      title: this.textOverlays.length + 1
+    });
 
   }
 
